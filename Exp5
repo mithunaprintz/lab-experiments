@@ -1,0 +1,36 @@
+facts = {
+    "has_fever",
+    "has_cough"
+}
+
+rules = [
+    ({"has_fever", "has_cough"}, "may_have_flu"),
+    ({"may_have_flu"}, "should_consult_doctor"),
+    ({"has_fever"}, "needs_rest"),
+    ({"has_cough"}, "needs_warm_water")
+]
+
+
+def inference_engine(facts, rules):
+    facts = set(facts)
+    changed = True
+
+    while changed:
+        changed = False
+
+        for conditions, conclusion in rules:
+            if conditions.issubset(facts) and conclusion not in facts:
+                facts.add(conclusion)
+                changed = True
+
+    return facts
+
+
+final_facts = inference_engine(facts, rules)
+
+print("Initial Facts:")
+print(facts)
+
+print("\nInferred Facts:")
+for fact in sorted(final_facts):
+    print("-", fact)
