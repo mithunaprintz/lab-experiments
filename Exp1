@@ -1,0 +1,36 @@
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder, MinMaxScaler
+
+# Create sample dataset
+data = {
+    "Name": ["Rahul", "Arun", "Priya", "Kavi", "Rahul"],
+    "Age": [21, 22, None, 20, 21],
+    "Department": ["CSE", "ECE", "CSE", "IT", "CSE"],
+    "Marks": [85, 78, 92, None, 85]
+}
+
+df = pd.DataFrame(data)
+
+print("Original Dataset:")
+print(df)
+
+# Handle missing values
+df["Age"] = df["Age"].fillna(df["Age"].mean())
+df["Marks"] = df["Marks"].fillna(df["Marks"].mean())
+
+# Remove duplicate rows
+df = df.drop_duplicates()
+
+# Encode categorical column
+encoder = LabelEncoder()
+df["Department"] = encoder.fit_transform(df["Department"])
+
+# Normalize Marks
+scaler = MinMaxScaler()
+df["Marks"] = scaler.fit_transform(df[["Marks"]])
+
+print("\nProcessed Dataset:")
+print(df)
+
+# Save dataset
+df.to_csv("processed_dataset.csv", index=False)
