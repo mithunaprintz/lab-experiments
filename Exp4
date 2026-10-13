@@ -1,0 +1,54 @@
+import random
+
+responses = {
+    "hello": [
+        "Hello! How can I help you?",
+        "Hi! Nice to meet you."
+    ],
+    "how are you": [
+        "I am doing great!",
+        "I am fine. Thank you!"
+    ],
+    "name": [
+        "I am AI Assistant.",
+        "You can call me ChatBot."
+    ],
+    "college": [
+        "I can help you with college-related queries."
+    ]
+}
+
+
+def chatbot(user_input):
+    text = user_input.lower()
+
+    if "hello" in text or "hi" in text:
+        return random.choice(responses["hello"])
+
+    elif "how are you" in text:
+        return random.choice(responses["how are you"])
+
+    elif "your name" in text:
+        return random.choice(responses["name"])
+
+    elif "college" in text:
+        return responses["college"][0]
+
+    elif "bye" in text:
+        return "Goodbye! Have a nice day."
+
+    else:
+        return "Sorry, I don't understand that."
+
+
+print("AI Chatbot Started")
+print("Type 'bye' to exit.")
+
+while True:
+    user = input("You: ")
+
+    reply = chatbot(user)
+    print("Bot:", reply)
+
+    if "bye" in user.lower():
+        break
